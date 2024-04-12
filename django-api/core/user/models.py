@@ -4,6 +4,7 @@ from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, Permis
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
 from django.http import Http404
+from core.abstract.models import AbstractModel, AbstractManager
 
 #BaseUserManager: es el administrador de modelos que se utilizará para interactuar con la base de datos
 
@@ -13,7 +14,8 @@ from django.http import Http404
 
 # Importa el módulo uuid para generar identificadores únicos universales (UUIDs).
 
-class UserManager(BaseUserManager):
+class UserManager(BaseUserManager, AbstractManager): # UserManager: es el administrador de modelos que se utilizará para interactuar con la base de datos, en este caso creamos un método para obtener un objeto por su public_id, y como varios modelos tendran la misma funcion, lo creamos en un solo lugar para no repetir codigo
+    
     def get_object_by_public_id(self, public_id): # obtener usuario por su public_id, si no existe, retorno un error 404, porque se utilizara un UUID en vez de números autoincrementales
       try:
         instance = self.get(public_id=public_id)
@@ -21,7 +23,7 @@ class UserManager(BaseUserManager):
       except (ObjectDoesNotExist, ValueError, TypeError):
         return Http404
     
-    def create_user(self, username, email, password=None, **kwargs):
+    def create_user(self, username, email, password=None, **kwargs): # crear un usuario con un email, número de teléfono, nombre de usuario y contraseña
       """Create and return a `User` with an email, phone number, username and password."""
       if username is None:
           raise TypeError('Users must have a username.')
@@ -37,7 +39,7 @@ class UserManager(BaseUserManager):
 
       return user
 
-    def create_superuser(self, username, email, password, **kwargs):
+    def create_superuser(self, username, email, password, **kwargs): # crear un superusuario con un email, número de teléfono, nombre de usuario y contraseña
       """
       Create and return a `User` with superuser (admin) permissions.
       """
@@ -55,8 +57,7 @@ class UserManager(BaseUserManager):
 
       return user
 
-class User(AbstractBaseUser, PermissionsMixin):
-    public_id = models.UUIDField(db_index=True, unique=True, default=uuid.uuid4, editable=False) #UUIDField es un campo que almacena un identificador único universal (UUID).
+class User(AbstractModel, AbstractBaseUser, PermissionsMixin):
     username = models.CharField(db_index=True, max_length=255, unique=True)
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
@@ -68,13 +69,10 @@ class User(AbstractBaseUser, PermissionsMixin):
     bio = models.TextField(null=True) # biografia
     avatar = models.ImageField(null=True) # imagen de perfil
 
-    created = models.DateTimeField(auto_now=True)
-    updated = models.DateTimeField(auto_now_add=True)
-
     USERNAME_FIELD = 'email' # campo que se utilizara para el login, la cua es unico
     REQUIRED_FIELDS = ['username']
 
-    objects = UserManager() # Asigna el administrador de modelos personalizado a la clase User.
+    objects = UserManager()
 
     def __str__(self):
         return f"{self.email}"

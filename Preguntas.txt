@@ -1,0 +1,20 @@
+1. ¿Qué es un JWT?
+Un token de autenticacion con buena seguridad
+
+2. ¿Qué es Django Rest Framework?
+Es un marco de trabajo de Django para crear APIs
+
+3. ¿Qué es un modelo?
+Una clase la cual es la representacion e intermediario entre python y django, el cual contiene los atributos y tipos de la base de datos.
+
+4. ¿Qué es un serializador?
+Es un metodo para convertir objetos/elementos complejos en JSON
+
+5. ¿Qué es un conjunto de vistas?
+Son las puertas de los usuarios, son las funciones/clases que reciben las solicitudes de los usuarios
+
+6. ¿Qué es un enrutador?
+Es el cual redirecciona la peticion del usuario segun la url que solicitudes
+
+7. ¿Cuál es el uso de un token de actualización?
+Es para poder obtener un nuevo token de acceso.

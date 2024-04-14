@@ -18,3 +18,16 @@ Es el cual redirecciona la peticion del usuario segun la url que solicitudes
 
 7. ¿Cuál es el uso de un token de actualización?
 Es para poder obtener un nuevo token de acceso.
+
+1. ¿Cuáles son algunas relaciones de bases de datos?
+Uno a uno, uno a muchos y muchos a muchos
+
+2. ¿Qué son los permisos de Django?
+Son clases que se crean para manejar el acceso a vistas o objetos de base de datos según el usuario y sus atributos
+
+3. ¿Cómo se paginan los resultados de una respuesta API?
+Con estas configuraciones en REST_FRAMEWORK:
+'DEFAULT_PAGINATION_CLASS':'rest_framework.pagination.LimitOffsetPagination',
+'PAGE_SIZE': 15
+4. ¿Cómo se usa el shell de Django?
+Se abre con "python manage.py shell" y puedo importar cualquier cosa del proyecto y utilizarlo normal como el shell de python base

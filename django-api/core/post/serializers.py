@@ -19,6 +19,8 @@ class PostSerializer(AbstractSerializer):
     request = self.context.get('request', None)
     if request is None or request.user.is_anonymous: # si el usuario es anonimo, retorno False
       return False
+
+    # si el usuario no es anonimo, retorno si el usuario ha dado like al post
     return request.user.has_liked(instance) # retorno si el usuario ha dado like al post
   
   def get_likes_count(self, instance): # obtengo la cantidad de likes que tiene el post

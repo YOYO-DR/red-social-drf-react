@@ -18,6 +18,7 @@ class AbstractModel(models.Model): # AbstractModel: es una clase abstracta que h
   default=uuid.uuid4, editable=False)
   created = models.DateTimeField(auto_now_add=True)
   updated = models.DateTimeField(auto_now=True)
+  is_deleted = models.BooleanField(default=False) # para no eliminar los registros de la base de datos, sino marcarlos como eliminados
   objects = AbstractManager()
 
   class Meta:

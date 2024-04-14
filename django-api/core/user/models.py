@@ -69,6 +69,8 @@ class User(AbstractModel, AbstractBaseUser, PermissionsMixin):
     bio = models.TextField(null=True) # biografia
     avatar = models.ImageField(null=True) # imagen de perfil
 
+    posts_liked = models.ManyToManyField("core_post.Post", related_name="liked_by")
+
     USERNAME_FIELD = 'email' # campo que se utilizara para el login, la cua es unico
     REQUIRED_FIELDS = ['username']
 
@@ -76,6 +78,18 @@ class User(AbstractModel, AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         return f"{self.email}"
+    
+    def like(self, post):
+      """Dar like a un `post`"""
+      return self.posts_liked.add(post)
+    
+    def remove_like(self, post):
+      """Eliminar el like a un `post`"""
+      return self.posts_liked.remove(post)
+    
+    def has_liked(self, post):
+      """Consultar si el usuario ha dado like a un `post`"""
+      return self.posts_liked.filter(pk=post.pk).exists()
 
     @property
     def name(self):

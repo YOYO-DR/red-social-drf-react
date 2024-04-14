@@ -3,15 +3,16 @@ from core.abstract.models import AbstractModel, AbstractManager
 
 
 class CommentManager(AbstractManager):
-  pass
+    pass
+
 
 class Comment(AbstractModel):
-  post = models.ForeignKey("core_post.Post", on_delete=models.PROTECT)
-  author = models.ForeignKey("core_user.User", on_delete=models.PROTECT)
-  body = models.TextField()
-  edited = models.BooleanField(default=False)
-  
-  objects = CommentManager()
+    post = models.ForeignKey("core_post.Post", on_delete=models.PROTECT)
+    author = models.ForeignKey("core_user.User", on_delete=models.PROTECT)
+    body = models.TextField()
+    edited = models.BooleanField(default=False)
 
-  def __str__(self):
-    return self.author.name
+    objects = CommentManager()
+
+    def __str__(self):
+        return self.author.name

@@ -17,8 +17,7 @@ class LoginSerializer(TokenObtainPairSerializer):
         data["access"] = str(
             refresh.access_token
         )  # convierto el token de acceso a string
-        if (
-            api_settings.UPDATE_LAST_LOGIN
-        ):  # si la configuración de la API es que se actualice el último inicio de sesión
+        if api_settings.UPDATE_LAST_LOGIN:
+            # si la configuración de la API es que se actualice el último inicio de sesión
             update_last_login(None, self.user)  # actualizo el último inicio de sesión
         return data  # devuelvo los datos

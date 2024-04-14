@@ -62,10 +62,6 @@ class PostViewSet(AbstractViewSet):
         self.perform_create(serializer)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
-    def perform_destroy(self, instance):  # este se ejecuta cuando se elimina un objeto
-        instance.is_deleted = True  # marco el objeto como eliminado
-        instance.save()
-
     # el detail=True es para que se aplique a un objeto en particular
     @action(methods=["post"], detail=True)
     # en detail=False se aplica a la lista de objetos

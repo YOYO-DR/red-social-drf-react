@@ -28,5 +28,9 @@ class AbstractModel(
     )  # para no eliminar los registros de la base de datos, sino marcarlos como eliminados
     objects = AbstractManager()
 
+    def delete(self, using=None, keep_parents=False):
+        self.is_deleted = True
+        self.save()
+
     class Meta:
         abstract = True  # Meta: es una clase interna de la clase AbstractModel, y se utiliza para definir metadatos de la clase, en este caso, abstract=True indica que la clase es abstracta y no se creará una tabla en la base de datos para ella

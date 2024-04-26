@@ -4,34 +4,7 @@ from core.post.serializers import PostSerializer
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.decorators import action
-
-from rest_framework.permissions import BasePermission, SAFE_METHODS
-
-
-class UserPermission(BasePermission):
-    def has_object_permission(self, request, view, obj):
-        if request.user.is_anonymous:
-            # si el usuario es anonimo, solo permito los metodos seguros (GET, HEAD, OPTIONS)
-            return request.method in SAFE_METHODS
-
-        if view.basename in ["post"]:  # si el viewset es de post
-            return bool(
-                request.user  # solo permito que el usuario autenticado pueda acceder a este objeto
-                and request.user.is_authenticated
-            )
-        return False
-
-    # verifico si el usuario tiene permisos para acceder a esta vista
-    def has_permission(self, request, view):
-        if view.basename in ["post"]:  # si el viewset es de post
-            # si el usuario es anonimo, solo permito los metodos seguros (GET, HEAD, OPTIONS)
-            if request.user.is_anonymous:
-                return request.method in SAFE_METHODS
-            return bool(
-                request.user  # solo permito que el usuario autenticado pueda acceder a esta vista
-                and request.user.is_authenticated
-            )
-        return False
+from core.auth.permissions import UserPermission
 
 
 class PostViewSet(AbstractViewSet):

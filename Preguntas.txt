@@ -31,3 +31,13 @@ Con estas configuraciones en REST_FRAMEWORK:
 'PAGE_SIZE': 15
 4. ¿Cómo se usa el shell de Django?
 Se abre con "python manage.py shell" y puedo importar cualquier cosa del proyecto y utilizarlo normal como el shell de python base
+
+1. ¿Qué es una ruta anidada?
+Es cuando se une 2 viewset, sirve cuando se sabe que un modelo si o si depende de otro, como comment que siempre sera de un post
+
+2. ¿Qué son los enrutadores anidados drf?
+Son clases para lograr unir 2 viewsets
+
+3. ¿Qué atributo en un serializador modelo puede ayudarlo a saber si la solicitud es una solicitud PUT o DELETE?
+En alguna funcion lo sabria con el self.context["request"].method
+Pero si el serializador se utiliza en un viewset, sino, se debe pasar como parametro enla clase del serializador

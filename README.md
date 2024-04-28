@@ -1,7 +1,7 @@
 # red-social-drf-react
 Practica de red social de Django REST Framework y React
 
-# Pagina 112
+# Pagina 124
 
 **Pre-commit Hooks**
 

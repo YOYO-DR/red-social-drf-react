@@ -73,7 +73,6 @@ class TestPostViewSet:
         "body": "Test Post Body",
         "author": "test_user"
     }
-
     response = client.post(self.endpoint, data)
     assert response.status_code == status.HTTP_401_UNAUTHORIZED
 

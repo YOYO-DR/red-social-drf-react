@@ -52,7 +52,7 @@ class TestPostViewSet:
     client.force_authenticate(user=user)
     response = client.delete(self.endpoint + post.public_id.hex + "/")
     assert response.status_code == status.HTTP_204_NO_CONTENT
-  
+
   # probar el listado y obtener un post sin autenticacion
   def test_list_anonymous(self, client, post):
     response = client.get(self.endpoint)
@@ -70,9 +70,9 @@ class TestPostViewSet:
   # probar crear un post sin autenticacion
   def test_create_anonymous(self, client):
     data = {
- "body": "Test Post Body",
- "author": "test_user"
- }
+        "body": "Test Post Body",
+        "author": "test_user"
+    }
 
     response = client.post(self.endpoint, data)
     assert response.status_code == status.HTTP_401_UNAUTHORIZED
@@ -80,10 +80,10 @@ class TestPostViewSet:
   # probar actualizar un post sin autenticacion
   def test_update_anonymous(self, client, post):
     data = {
-    "body": "Test Post Body",
-    "author": "test_user"
+        "body": "Test Post Body",
+        "author": "test_user"
     }
-    response = client.put(self.endpoint +  post.public_id.hex + "/", data)
+    response = client.put(self.endpoint + post.public_id.hex + "/", data)
     assert response.status_code == status.HTTP_401_UNAUTHORIZED
 
   # probar eliminar un post sin autenticacion

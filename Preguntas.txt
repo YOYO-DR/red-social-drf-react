@@ -41,3 +41,18 @@ Son clases para lograr unir 2 viewsets
 3. ¿Qué atributo en un serializador modelo puede ayudarlo a saber si la solicitud es una solicitud PUT o DELETE?
 En alguna funcion lo sabria con el self.context["request"].method
 Pero si el serializador se utiliza en un viewset, sino, se debe pasar como parametro enla clase del serializador
+
+1. ¿Qué es la prueba?
+Es una acción para validar que algo se realice bien
+
+2. ¿Qué es una prueba unitaria?
+Es cuando se prueba una funcionalidad en concreto
+
+5. ¿Qué es un accesorio Pytest?
+Es un valor base requerido para alguna prueba, sirve para no tener que crearlo en el momento de la prueba si no que ya este hecho
+
+4. ¿Qué es Pytest?
+es una libreria para realizar diferentes tipos de pruebas
+
+3. ¿Qué es la pirámide de pruebas?
+Es una practica para realizar pruebas, se deben hacer primero las pruebas unitarias ya que son rapidas, cortas y se prueban varios componentes, luego de integracion cuando se prueban varios codigos en conjunto, y luego las pruebas de extremo a extremo donde se prueban diferentes metodos en conjunto de la aplicacion y hasta tambien conexiones con APIs externas como por ejemplo una API de pago

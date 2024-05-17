@@ -1,5 +1,6 @@
 import axios from "axios";
 import createAuthRefreshInterceptor from "axios-auth-refresh";
+import { getAccessToken, getRefreshToken } from "../hooks/user.actions";
 
 const axiosService = axios.create({ // creo una instancia de axios
   baseURL: "http://localhost:8000",
@@ -14,9 +15,7 @@ axiosService.interceptors.request.use(async (config) => { // esto es un intercep
 la solicitud
   */
   
-  // lo que se hace es obtener el token de acceso del localStorage y agregarlo a los encabezados de la solicitud
-  const { access } = JSON.parse(localStorage.getItem("auth"));
-  config.headers.Authorization = `Bearer ${access}`;
+  config.headers.Authorization = `Bearer ${getAccessToken()}`;
   return config;
 });
 
@@ -30,16 +29,15 @@ axiosService.interceptors.response.use(
 const refreshAuthLogic = async (failedRequest) => {
   // el failedRequest es la solicitud que fallo, en este caso es la solicitud que fallo por el token de acceso
 
-  const { refresh } = JSON.parse(localStorage.getItem("auth")); // se obtiene el token de actualizacion del localStorage
   return axios
     .post("/refresh/token/", null, { // se hace una solicitud para obtener un nuevo token de acceso, como se observa, no se ejcuta con axiosService, sino con axios, ya que axiosService tiene un interceptor que se ejecuta antes de hacer la solicitud, y en este caso no se quiere que se ejecute
       baseURL: "http://localhost:8000",
       headers: {
-        Authorization: `Bearer ${refresh}`,
+        Authorization: `Bearer ${getRefreshToken()}`,
       },
     })
     .then((resp) => {
-      const { access, refresh } = resp.data; // se obtiene el nuevo token de acceso y el nuevo token de actualizacion
+      const { access, refresh, user } = resp.data; // se obtiene el nuevo token de acceso y el nuevo token de actualizacion
 
       failedRequest.response.config.headers["Authorization"] =
         "Bearer " + access; // se agrega el nuevo token de acceso a los encabezados de la solicitud que fallo, el cual se ejecutara de nuevo
@@ -49,6 +47,7 @@ const refreshAuthLogic = async (failedRequest) => {
         JSON.stringify({
           access,
           refresh,
+          user
         })
       );
     })
@@ -56,6 +55,7 @@ const refreshAuthLogic = async (failedRequest) => {
       localStorage.removeItem("auth");
     });
 };
+
 
 // se crea un interceptor para manejar la actualizacion del token de acceso, cada que se ejecute una solicitud y se reciba un codigo de estado 401 - no autorizado, se ejecutara la funcion refreshAuthLogic
 createAuthRefreshInterceptor(axiosService, refreshAuthLogic);

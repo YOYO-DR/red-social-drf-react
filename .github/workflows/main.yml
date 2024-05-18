@@ -18,6 +18,11 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: '14' # Ajusta la versión según sea necesario
+      - name: Mostrar directorio
+        run: pwd
+
+      - name: listar carpetas
+        run: ls -ltr
 
       - name: Change directory
         run: cd social-media-app

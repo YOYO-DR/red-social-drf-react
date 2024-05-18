@@ -23,9 +23,9 @@ jobs:
         run: cd social-media-app
 
       - name: Install dependencies
-        working-directory:./social-media-app
+         working-directory:./social-media-app
         run: npm install
 
       - name: Build
-        working-directory:./social-media-app
+         working-directory:./social-media-app
         run: npm ci && npm run build

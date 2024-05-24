@@ -3,7 +3,7 @@ import createAuthRefreshInterceptor from "axios-auth-refresh";
 import { getAccessToken, getRefreshToken } from "../hooks/user.actions";
 
 const axiosService = axios.create({ // creo una instancia de axios
-  baseURL: "http://localhost:8000",
+  baseURL: "http://localhost:8000/api",
   headers: {
     "Content-Type": "application/json",
   },
@@ -31,7 +31,7 @@ const refreshAuthLogic = async (failedRequest) => {
 
   return axios
     .post("/refresh/token/", null, { // se hace una solicitud para obtener un nuevo token de acceso, como se observa, no se ejcuta con axiosService, sino con axios, ya que axiosService tiene un interceptor que se ejecuta antes de hacer la solicitud, y en este caso no se quiere que se ejecute
-      baseURL: "http://localhost:8000",
+      baseURL: "http://localhost:8000/api",
       headers: {
         Authorization: `Bearer ${getRefreshToken()}`,
       },

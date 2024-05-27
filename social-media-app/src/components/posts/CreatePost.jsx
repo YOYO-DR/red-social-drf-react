@@ -2,9 +2,12 @@ import { Button, Modal, Form } from "react-bootstrap";
 import axiosService from "../../helpers/axios";
 import { getUser } from "../../hooks/user.actions";
 import { useState } from "react";
-import  Toaster  from "../Toaster";
+import Toaster from "../Toaster";
+import { PropTypes } from "prop-types";
+import ModalPost from "../forms/ModalPost";
 
-function CreatePost() {
+function CreatePost(props) {
+  const {changePost} = props;
   const formBase = { body: "" };
   const [show, setShow] = useState(false); // inicializo el estado del modal
   const handleClose = () => setShow(false); // función para cerrar el modal
@@ -39,6 +42,7 @@ function CreatePost() {
         setToastType("success");
         setForm(formBase);
         setShowToast(true);
+        changePost(); // actualizar los posts
       })
       .catch((error) => {
         setToastMessage("An error occurred.");
@@ -58,33 +62,8 @@ function CreatePost() {
           onClick={handleShow}
         />
       </Form.Group>
-      <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton className="border-0">
-          <Modal.Title>Create Post</Modal.Title>
-        </Modal.Header>
-        <Modal.Body className="border-0">
-          <Form noValidate validated={validated} onSubmit={handleSubmit}>
-            <Form.Group className="mb-3">
-              <Form.Control
-                name="body"
-                value={"body" in form ? form.body : ""}
-                onChange={(e) => setForm({ ...form, body: e.target.value })}
-                as="textarea"
-                rows={3}
-              />
-            </Form.Group>
-          </Form>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button
-            variant="primary"
-            onClick={handleSubmit}
-            disabled={form.body === ""}
-          >
-            Post
-          </Button>
-        </Modal.Footer>
-      </Modal>
+      <ModalPost show={show} handleClose={handleClose} form={form} setForm={setForm} validated={validated} handleSubmit={handleSubmit} />
+
       <Toaster
         title="Post!"
         message={toastMessage}
@@ -95,4 +74,8 @@ function CreatePost() {
     </>
   );
 }
+
+CreatePost.propTypes = {
+  changePost: PropTypes.func.isRequired,
+};
 export default CreatePost;

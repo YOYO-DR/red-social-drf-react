@@ -1,5 +1,6 @@
 import { Toast, ToastContainer } from "react-bootstrap";
 import PropTypes from "prop-types"; // Importar PropTypes
+
 function Toaster(props) {
   const { showToast, title, message, onClose, type } = props;
   return (

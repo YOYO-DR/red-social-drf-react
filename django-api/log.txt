@@ -1,0 +1,1232 @@
+============================= test session starts =============================
+platform win32 -- Python 3.11.2, pytest-8.2.0, pluggy-1.5.0
+django: version: 4.0, settings: config.settings (from ini)
+rootdir: D:\programacion\Python\DJango\Libros\full-stack-django-react-hands_espanol\django-api
+configfile: pytest.ini
+plugins: django-4.8.0
+collected 34 items
+
+core\auth\tests.py EEE                                                   [  8%]
+core\comment\tests\test_comment_models.py E                              [ 11%]
+core\comment\tests\test_comment_viewsets.py EEEEEEEEEE                   [ 41%]
+core\post\tests\test_post_models.py E                                    [ 44%]
+core\post\tests\test_post_viewsets.py EEEEEEEEE                          [ 70%]
+core\user\tests\test_user_viewsets.py EEEE                               [ 82%]
+core\user\tests.py EE                                                    [ 88%]
+core\post\tests\test_post_viewsets.py .                                  [ 91%]
+tests.py ..F                                                             [100%]
+
+=================================== ERRORS ====================================
+___________ ERROR at setup of TestAuthenticationViewSet.test_login ____________
+
+request = <SubRequest 'django_db_setup' for <Function test_login>>
+django_test_environment = None
+django_db_blocker = <pytest_django.plugin.DjangoDbBlocker object at 0x000002D07ADB7910>
+django_db_use_migrations = True, django_db_keepdb = False
+django_db_createdb = False, django_db_modify_db_settings = None
+
+    @pytest.fixture(scope="session")
+    def django_db_setup(
+        request: pytest.FixtureRequest,
+        django_test_environment: None,
+        django_db_blocker: DjangoDbBlocker,
+        django_db_use_migrations: bool,
+        django_db_keepdb: bool,
+        django_db_createdb: bool,
+        django_db_modify_db_settings: None,
+    ) -> Generator[None, None, None]:
+        """Top level fixture to ensure test databases are available"""
+        from django.test.utils import setup_databases, teardown_databases
+    
+        setup_databases_args = {}
+    
+        if not django_db_use_migrations:
+            _disable_migrations()
+    
+        if django_db_keepdb and not django_db_createdb:
+            setup_databases_args["keepdb"] = True
+    
+        with django_db_blocker.unblock():
+>           db_cfg = setup_databases(
+                verbosity=request.config.option.verbose,
+                interactive=False,
+                **setup_databases_args,
+            )
+
+env\Lib\site-packages\pytest_django\fixtures.py:139: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+env\Lib\site-packages\django\test\utils.py:176: in setup_databases
+    test_databases, mirrored_aliases = get_unique_databases_and_mirrors(aliases)
+env\Lib\site-packages\django\test\utils.py:318: in get_unique_databases_and_mirrors
+    default_sig = connections[DEFAULT_DB_ALIAS].creation.test_db_signature()
+env\Lib\site-packages\django\db\backends\base\creation.py:341: in test_db_signature
+    self._get_test_db_name(),
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <django.db.backends.postgresql.creation.DatabaseCreation object at 0x000002D07D990510>
+
+    def _get_test_db_name(self):
+        """
+        Internal implementation - return the name of the test DB that will be
+        created. Only useful when called from create_test_db() and
+        _create_test_db() and when no external munging is done with the 'NAME'
+        settings.
+        """
+        if self.connection.settings_dict['TEST']['NAME']:
+            return self.connection.settings_dict['TEST']['NAME']
+>       return TEST_DATABASE_PREFIX + self.connection.settings_dict['NAME']
+E       TypeError: can only concatenate str (not "NoneType") to str
+
+env\Lib\site-packages\django\db\backends\base\creation.py:176: TypeError
+__________ ERROR at setup of TestAuthenticationViewSet.test_register __________
+
+request = <SubRequest '_django_db_marker' for <Function test_register>>
+
+    @pytest.fixture(autouse=True)
+    def _django_db_marker(request: pytest.FixtureRequest) -> None:
+        """Implement the django_db marker, internal to pytest-django."""
+        marker = request.node.get_closest_marker("django_db")
+        if marker:
+>           request.getfixturevalue("_django_db_helper")
+
+env\Lib\site-packages\pytest_django\plugin.py:532: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+env\Lib\site-packages\pytest_django\fixtures.py:139: in django_db_setup
+    db_cfg = setup_databases(
+env\Lib\site-packages\django\test\utils.py:176: in setup_databases
+    test_databases, mirrored_aliases = get_unique_databases_and_mirrors(aliases)
+env\Lib\site-packages\django\test\utils.py:318: in get_unique_databases_and_mirrors
+    default_sig = connections[DEFAULT_DB_ALIAS].creation.test_db_signature()
+env\Lib\site-packages\django\db\backends\base\creation.py:341: in test_db_signature
+    self._get_test_db_name(),
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <django.db.backends.postgresql.creation.DatabaseCreation object at 0x000002D07D990510>
+
+    def _get_test_db_name(self):
+        """
+        Internal implementation - return the name of the test DB that will be
+        created. Only useful when called from create_test_db() and
+        _create_test_db() and when no external munging is done with the 'NAME'
+        settings.
+        """
+        if self.connection.settings_dict['TEST']['NAME']:
+            return self.connection.settings_dict['TEST']['NAME']
+>       return TEST_DATABASE_PREFIX + self.connection.settings_dict['NAME']
+E       TypeError: can only concatenate str (not "NoneType") to str
+
+env\Lib\site-packages\django\db\backends\base\creation.py:176: TypeError
+__________ ERROR at setup of TestAuthenticationViewSet.test_refresh ___________
+
+request = <SubRequest '_django_db_marker' for <Function test_register>>
+
+    @pytest.fixture(autouse=True)
+    def _django_db_marker(request: pytest.FixtureRequest) -> None:
+        """Implement the django_db marker, internal to pytest-django."""
+        marker = request.node.get_closest_marker("django_db")
+        if marker:
+>           request.getfixturevalue("_django_db_helper")
+
+env\Lib\site-packages\pytest_django\plugin.py:532: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+env\Lib\site-packages\pytest_django\fixtures.py:139: in django_db_setup
+    db_cfg = setup_databases(
+env\Lib\site-packages\django\test\utils.py:176: in setup_databases
+    test_databases, mirrored_aliases = get_unique_databases_and_mirrors(aliases)
+env\Lib\site-packages\django\test\utils.py:318: in get_unique_databases_and_mirrors
+    default_sig = connections[DEFAULT_DB_ALIAS].creation.test_db_signature()
+env\Lib\site-packages\django\db\backends\base\creation.py:341: in test_db_signature
+    self._get_test_db_name(),
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <django.db.backends.postgresql.creation.DatabaseCreation object at 0x000002D07D990510>
+
+    def _get_test_db_name(self):
+        """
+        Internal implementation - return the name of the test DB that will be
+        created. Only useful when called from create_test_db() and
+        _create_test_db() and when no external munging is done with the 'NAME'
+        settings.
+        """
+        if self.connection.settings_dict['TEST']['NAME']:
+            return self.connection.settings_dict['TEST']['NAME']
+>       return TEST_DATABASE_PREFIX + self.connection.settings_dict['NAME']
+E       TypeError: can only concatenate str (not "NoneType") to str
+
+env\Lib\site-packages\django\db\backends\base\creation.py:176: TypeError
+____________________ ERROR at setup of test_create_comment ____________________
+
+request = <SubRequest '_django_db_marker' for <Function test_register>>
+
+    @pytest.fixture(autouse=True)
+    def _django_db_marker(request: pytest.FixtureRequest) -> None:
+        """Implement the django_db marker, internal to pytest-django."""
+        marker = request.node.get_closest_marker("django_db")
+        if marker:
+>           request.getfixturevalue("_django_db_helper")
+
+env\Lib\site-packages\pytest_django\plugin.py:532: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+env\Lib\site-packages\pytest_django\fixtures.py:139: in django_db_setup
+    db_cfg = setup_databases(
+env\Lib\site-packages\django\test\utils.py:176: in setup_databases
+    test_databases, mirrored_aliases = get_unique_databases_and_mirrors(aliases)
+env\Lib\site-packages\django\test\utils.py:318: in get_unique_databases_and_mirrors
+    default_sig = connections[DEFAULT_DB_ALIAS].creation.test_db_signature()
+env\Lib\site-packages\django\db\backends\base\creation.py:341: in test_db_signature
+    self._get_test_db_name(),
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <django.db.backends.postgresql.creation.DatabaseCreation object at 0x000002D07D990510>
+
+    def _get_test_db_name(self):
+        """
+        Internal implementation - return the name of the test DB that will be
+        created. Only useful when called from create_test_db() and
+        _create_test_db() and when no external munging is done with the 'NAME'
+        settings.
+        """
+        if self.connection.settings_dict['TEST']['NAME']:
+            return self.connection.settings_dict['TEST']['NAME']
+>       return TEST_DATABASE_PREFIX + self.connection.settings_dict['NAME']
+E       TypeError: can only concatenate str (not "NoneType") to str
+
+env\Lib\site-packages\django\db\backends\base\creation.py:176: TypeError
+_______________ ERROR at setup of TestCommentViewSet.test_list ________________
+
+request = <SubRequest '_django_db_marker' for <Function test_register>>
+
+    @pytest.fixture(autouse=True)
+    def _django_db_marker(request: pytest.FixtureRequest) -> None:
+        """Implement the django_db marker, internal to pytest-django."""
+        marker = request.node.get_closest_marker("django_db")
+        if marker:
+>           request.getfixturevalue("_django_db_helper")
+
+env\Lib\site-packages\pytest_django\plugin.py:532: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+env\Lib\site-packages\pytest_django\fixtures.py:139: in django_db_setup
+    db_cfg = setup_databases(
+env\Lib\site-packages\django\test\utils.py:176: in setup_databases
+    test_databases, mirrored_aliases = get_unique_databases_and_mirrors(aliases)
+env\Lib\site-packages\django\test\utils.py:318: in get_unique_databases_and_mirrors
+    default_sig = connections[DEFAULT_DB_ALIAS].creation.test_db_signature()
+env\Lib\site-packages\django\db\backends\base\creation.py:341: in test_db_signature
+    self._get_test_db_name(),
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <django.db.backends.postgresql.creation.DatabaseCreation object at 0x000002D07D990510>
+
+    def _get_test_db_name(self):
+        """
+        Internal implementation - return the name of the test DB that will be
+        created. Only useful when called from create_test_db() and
+        _create_test_db() and when no external munging is done with the 'NAME'
+        settings.
+        """
+        if self.connection.settings_dict['TEST']['NAME']:
+            return self.connection.settings_dict['TEST']['NAME']
+>       return TEST_DATABASE_PREFIX + self.connection.settings_dict['NAME']
+E       TypeError: can only concatenate str (not "NoneType") to str
+
+env\Lib\site-packages\django\db\backends\base\creation.py:176: TypeError
+_____________ ERROR at setup of TestCommentViewSet.test_retrieve ______________
+
+request = <SubRequest '_django_db_marker' for <Function test_register>>
+
+    @pytest.fixture(autouse=True)
+    def _django_db_marker(request: pytest.FixtureRequest) -> None:
+        """Implement the django_db marker, internal to pytest-django."""
+        marker = request.node.get_closest_marker("django_db")
+        if marker:
+>           request.getfixturevalue("_django_db_helper")
+
+env\Lib\site-packages\pytest_django\plugin.py:532: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+env\Lib\site-packages\pytest_django\fixtures.py:139: in django_db_setup
+    db_cfg = setup_databases(
+env\Lib\site-packages\django\test\utils.py:176: in setup_databases
+    test_databases, mirrored_aliases = get_unique_databases_and_mirrors(aliases)
+env\Lib\site-packages\django\test\utils.py:318: in get_unique_databases_and_mirrors
+    default_sig = connections[DEFAULT_DB_ALIAS].creation.test_db_signature()
+env\Lib\site-packages\django\db\backends\base\creation.py:341: in test_db_signature
+    self._get_test_db_name(),
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <django.db.backends.postgresql.creation.DatabaseCreation object at 0x000002D07D990510>
+
+    def _get_test_db_name(self):
+        """
+        Internal implementation - return the name of the test DB that will be
+        created. Only useful when called from create_test_db() and
+        _create_test_db() and when no external munging is done with the 'NAME'
+        settings.
+        """
+        if self.connection.settings_dict['TEST']['NAME']:
+            return self.connection.settings_dict['TEST']['NAME']
+>       return TEST_DATABASE_PREFIX + self.connection.settings_dict['NAME']
+E       TypeError: can only concatenate str (not "NoneType") to str
+
+env\Lib\site-packages\django\db\backends\base\creation.py:176: TypeError
+______________ ERROR at setup of TestCommentViewSet.test_create _______________
+
+request = <SubRequest '_django_db_marker' for <Function test_register>>
+
+    @pytest.fixture(autouse=True)
+    def _django_db_marker(request: pytest.FixtureRequest) -> None:
+        """Implement the django_db marker, internal to pytest-django."""
+        marker = request.node.get_closest_marker("django_db")
+        if marker:
+>           request.getfixturevalue("_django_db_helper")
+
+env\Lib\site-packages\pytest_django\plugin.py:532: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+env\Lib\site-packages\pytest_django\fixtures.py:139: in django_db_setup
+    db_cfg = setup_databases(
+env\Lib\site-packages\django\test\utils.py:176: in setup_databases
+    test_databases, mirrored_aliases = get_unique_databases_and_mirrors(aliases)
+env\Lib\site-packages\django\test\utils.py:318: in get_unique_databases_and_mirrors
+    default_sig = connections[DEFAULT_DB_ALIAS].creation.test_db_signature()
+env\Lib\site-packages\django\db\backends\base\creation.py:341: in test_db_signature
+    self._get_test_db_name(),
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <django.db.backends.postgresql.creation.DatabaseCreation object at 0x000002D07D990510>
+
+    def _get_test_db_name(self):
+        """
+        Internal implementation - return the name of the test DB that will be
+        created. Only useful when called from create_test_db() and
+        _create_test_db() and when no external munging is done with the 'NAME'
+        settings.
+        """
+        if self.connection.settings_dict['TEST']['NAME']:
+            return self.connection.settings_dict['TEST']['NAME']
+>       return TEST_DATABASE_PREFIX + self.connection.settings_dict['NAME']
+E       TypeError: can only concatenate str (not "NoneType") to str
+
+env\Lib\site-packages\django\db\backends\base\creation.py:176: TypeError
+______________ ERROR at setup of TestCommentViewSet.test_update _______________
+
+request = <SubRequest '_django_db_marker' for <Function test_register>>
+
+    @pytest.fixture(autouse=True)
+    def _django_db_marker(request: pytest.FixtureRequest) -> None:
+        """Implement the django_db marker, internal to pytest-django."""
+        marker = request.node.get_closest_marker("django_db")
+        if marker:
+>           request.getfixturevalue("_django_db_helper")
+
+env\Lib\site-packages\pytest_django\plugin.py:532: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+env\Lib\site-packages\pytest_django\fixtures.py:139: in django_db_setup
+    db_cfg = setup_databases(
+env\Lib\site-packages\django\test\utils.py:176: in setup_databases
+    test_databases, mirrored_aliases = get_unique_databases_and_mirrors(aliases)
+env\Lib\site-packages\django\test\utils.py:318: in get_unique_databases_and_mirrors
+    default_sig = connections[DEFAULT_DB_ALIAS].creation.test_db_signature()
+env\Lib\site-packages\django\db\backends\base\creation.py:341: in test_db_signature
+    self._get_test_db_name(),
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <django.db.backends.postgresql.creation.DatabaseCreation object at 0x000002D07D990510>
+
+    def _get_test_db_name(self):
+        """
+        Internal implementation - return the name of the test DB that will be
+        created. Only useful when called from create_test_db() and
+        _create_test_db() and when no external munging is done with the 'NAME'
+        settings.
+        """
+        if self.connection.settings_dict['TEST']['NAME']:
+            return self.connection.settings_dict['TEST']['NAME']
+>       return TEST_DATABASE_PREFIX + self.connection.settings_dict['NAME']
+E       TypeError: can only concatenate str (not "NoneType") to str
+
+env\Lib\site-packages\django\db\backends\base\creation.py:176: TypeError
+______________ ERROR at setup of TestCommentViewSet.test_delete _______________
+
+request = <SubRequest '_django_db_marker' for <Function test_register>>
+
+    @pytest.fixture(autouse=True)
+    def _django_db_marker(request: pytest.FixtureRequest) -> None:
+        """Implement the django_db marker, internal to pytest-django."""
+        marker = request.node.get_closest_marker("django_db")
+        if marker:
+>           request.getfixturevalue("_django_db_helper")
+
+env\Lib\site-packages\pytest_django\plugin.py:532: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+env\Lib\site-packages\pytest_django\fixtures.py:139: in django_db_setup
+    db_cfg = setup_databases(
+env\Lib\site-packages\django\test\utils.py:176: in setup_databases
+    test_databases, mirrored_aliases = get_unique_databases_and_mirrors(aliases)
+env\Lib\site-packages\django\test\utils.py:318: in get_unique_databases_and_mirrors
+    default_sig = connections[DEFAULT_DB_ALIAS].creation.test_db_signature()
+env\Lib\site-packages\django\db\backends\base\creation.py:341: in test_db_signature
+    self._get_test_db_name(),
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <django.db.backends.postgresql.creation.DatabaseCreation object at 0x000002D07D990510>
+
+    def _get_test_db_name(self):
+        """
+        Internal implementation - return the name of the test DB that will be
+        created. Only useful when called from create_test_db() and
+        _create_test_db() and when no external munging is done with the 'NAME'
+        settings.
+        """
+        if self.connection.settings_dict['TEST']['NAME']:
+            return self.connection.settings_dict['TEST']['NAME']
+>       return TEST_DATABASE_PREFIX + self.connection.settings_dict['NAME']
+E       TypeError: can only concatenate str (not "NoneType") to str
+
+env\Lib\site-packages\django\db\backends\base\creation.py:176: TypeError
+__________ ERROR at setup of TestCommentViewSet.test_list_anonymous ___________
+
+request = <SubRequest '_django_db_marker' for <Function test_register>>
+
+    @pytest.fixture(autouse=True)
+    def _django_db_marker(request: pytest.FixtureRequest) -> None:
+        """Implement the django_db marker, internal to pytest-django."""
+        marker = request.node.get_closest_marker("django_db")
+        if marker:
+>           request.getfixturevalue("_django_db_helper")
+
+env\Lib\site-packages\pytest_django\plugin.py:532: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+env\Lib\site-packages\pytest_django\fixtures.py:139: in django_db_setup
+    db_cfg = setup_databases(
+env\Lib\site-packages\django\test\utils.py:176: in setup_databases
+    test_databases, mirrored_aliases = get_unique_databases_and_mirrors(aliases)
+env\Lib\site-packages\django\test\utils.py:318: in get_unique_databases_and_mirrors
+    default_sig = connections[DEFAULT_DB_ALIAS].creation.test_db_signature()
+env\Lib\site-packages\django\db\backends\base\creation.py:341: in test_db_signature
+    self._get_test_db_name(),
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <django.db.backends.postgresql.creation.DatabaseCreation object at 0x000002D07D990510>
+
+    def _get_test_db_name(self):
+        """
+        Internal implementation - return the name of the test DB that will be
+        created. Only useful when called from create_test_db() and
+        _create_test_db() and when no external munging is done with the 'NAME'
+        settings.
+        """
+        if self.connection.settings_dict['TEST']['NAME']:
+            return self.connection.settings_dict['TEST']['NAME']
+>       return TEST_DATABASE_PREFIX + self.connection.settings_dict['NAME']
+E       TypeError: can only concatenate str (not "NoneType") to str
+
+env\Lib\site-packages\django\db\backends\base\creation.py:176: TypeError
+________ ERROR at setup of TestCommentViewSet.test_retrieve_anonymous _________
+
+request = <SubRequest '_django_db_marker' for <Function test_register>>
+
+    @pytest.fixture(autouse=True)
+    def _django_db_marker(request: pytest.FixtureRequest) -> None:
+        """Implement the django_db marker, internal to pytest-django."""
+        marker = request.node.get_closest_marker("django_db")
+        if marker:
+>           request.getfixturevalue("_django_db_helper")
+
+env\Lib\site-packages\pytest_django\plugin.py:532: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+env\Lib\site-packages\pytest_django\fixtures.py:139: in django_db_setup
+    db_cfg = setup_databases(
+env\Lib\site-packages\django\test\utils.py:176: in setup_databases
+    test_databases, mirrored_aliases = get_unique_databases_and_mirrors(aliases)
+env\Lib\site-packages\django\test\utils.py:318: in get_unique_databases_and_mirrors
+    default_sig = connections[DEFAULT_DB_ALIAS].creation.test_db_signature()
+env\Lib\site-packages\django\db\backends\base\creation.py:341: in test_db_signature
+    self._get_test_db_name(),
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <django.db.backends.postgresql.creation.DatabaseCreation object at 0x000002D07D990510>
+
+    def _get_test_db_name(self):
+        """
+        Internal implementation - return the name of the test DB that will be
+        created. Only useful when called from create_test_db() and
+        _create_test_db() and when no external munging is done with the 'NAME'
+        settings.
+        """
+        if self.connection.settings_dict['TEST']['NAME']:
+            return self.connection.settings_dict['TEST']['NAME']
+>       return TEST_DATABASE_PREFIX + self.connection.settings_dict['NAME']
+E       TypeError: can only concatenate str (not "NoneType") to str
+
+env\Lib\site-packages\django\db\backends\base\creation.py:176: TypeError
+_________ ERROR at setup of TestCommentViewSet.test_create_anonymous __________
+
+request = <SubRequest '_django_db_marker' for <Function test_register>>
+
+    @pytest.fixture(autouse=True)
+    def _django_db_marker(request: pytest.FixtureRequest) -> None:
+        """Implement the django_db marker, internal to pytest-django."""
+        marker = request.node.get_closest_marker("django_db")
+        if marker:
+>           request.getfixturevalue("_django_db_helper")
+
+env\Lib\site-packages\pytest_django\plugin.py:532: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+env\Lib\site-packages\pytest_django\fixtures.py:139: in django_db_setup
+    db_cfg = setup_databases(
+env\Lib\site-packages\django\test\utils.py:176: in setup_databases
+    test_databases, mirrored_aliases = get_unique_databases_and_mirrors(aliases)
+env\Lib\site-packages\django\test\utils.py:318: in get_unique_databases_and_mirrors
+    default_sig = connections[DEFAULT_DB_ALIAS].creation.test_db_signature()
+env\Lib\site-packages\django\db\backends\base\creation.py:341: in test_db_signature
+    self._get_test_db_name(),
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <django.db.backends.postgresql.creation.DatabaseCreation object at 0x000002D07D990510>
+
+    def _get_test_db_name(self):
+        """
+        Internal implementation - return the name of the test DB that will be
+        created. Only useful when called from create_test_db() and
+        _create_test_db() and when no external munging is done with the 'NAME'
+        settings.
+        """
+        if self.connection.settings_dict['TEST']['NAME']:
+            return self.connection.settings_dict['TEST']['NAME']
+>       return TEST_DATABASE_PREFIX + self.connection.settings_dict['NAME']
+E       TypeError: can only concatenate str (not "NoneType") to str
+
+env\Lib\site-packages\django\db\backends\base\creation.py:176: TypeError
+_________ ERROR at setup of TestCommentViewSet.test_update_anonymous __________
+
+request = <SubRequest '_django_db_marker' for <Function test_register>>
+
+    @pytest.fixture(autouse=True)
+    def _django_db_marker(request: pytest.FixtureRequest) -> None:
+        """Implement the django_db marker, internal to pytest-django."""
+        marker = request.node.get_closest_marker("django_db")
+        if marker:
+>           request.getfixturevalue("_django_db_helper")
+
+env\Lib\site-packages\pytest_django\plugin.py:532: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+env\Lib\site-packages\pytest_django\fixtures.py:139: in django_db_setup
+    db_cfg = setup_databases(
+env\Lib\site-packages\django\test\utils.py:176: in setup_databases
+    test_databases, mirrored_aliases = get_unique_databases_and_mirrors(aliases)
+env\Lib\site-packages\django\test\utils.py:318: in get_unique_databases_and_mirrors
+    default_sig = connections[DEFAULT_DB_ALIAS].creation.test_db_signature()
+env\Lib\site-packages\django\db\backends\base\creation.py:341: in test_db_signature
+    self._get_test_db_name(),
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <django.db.backends.postgresql.creation.DatabaseCreation object at 0x000002D07D990510>
+
+    def _get_test_db_name(self):
+        """
+        Internal implementation - return the name of the test DB that will be
+        created. Only useful when called from create_test_db() and
+        _create_test_db() and when no external munging is done with the 'NAME'
+        settings.
+        """
+        if self.connection.settings_dict['TEST']['NAME']:
+            return self.connection.settings_dict['TEST']['NAME']
+>       return TEST_DATABASE_PREFIX + self.connection.settings_dict['NAME']
+E       TypeError: can only concatenate str (not "NoneType") to str
+
+env\Lib\site-packages\django\db\backends\base\creation.py:176: TypeError
+_________ ERROR at setup of TestCommentViewSet.test_delete_anonymous __________
+
+request = <SubRequest '_django_db_marker' for <Function test_register>>
+
+    @pytest.fixture(autouse=True)
+    def _django_db_marker(request: pytest.FixtureRequest) -> None:
+        """Implement the django_db marker, internal to pytest-django."""
+        marker = request.node.get_closest_marker("django_db")
+        if marker:
+>           request.getfixturevalue("_django_db_helper")
+
+env\Lib\site-packages\pytest_django\plugin.py:532: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+env\Lib\site-packages\pytest_django\fixtures.py:139: in django_db_setup
+    db_cfg = setup_databases(
+env\Lib\site-packages\django\test\utils.py:176: in setup_databases
+    test_databases, mirrored_aliases = get_unique_databases_and_mirrors(aliases)
+env\Lib\site-packages\django\test\utils.py:318: in get_unique_databases_and_mirrors
+    default_sig = connections[DEFAULT_DB_ALIAS].creation.test_db_signature()
+env\Lib\site-packages\django\db\backends\base\creation.py:341: in test_db_signature
+    self._get_test_db_name(),
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <django.db.backends.postgresql.creation.DatabaseCreation object at 0x000002D07D990510>
+
+    def _get_test_db_name(self):
+        """
+        Internal implementation - return the name of the test DB that will be
+        created. Only useful when called from create_test_db() and
+        _create_test_db() and when no external munging is done with the 'NAME'
+        settings.
+        """
+        if self.connection.settings_dict['TEST']['NAME']:
+            return self.connection.settings_dict['TEST']['NAME']
+>       return TEST_DATABASE_PREFIX + self.connection.settings_dict['NAME']
+E       TypeError: can only concatenate str (not "NoneType") to str
+
+env\Lib\site-packages\django\db\backends\base\creation.py:176: TypeError
+_____________________ ERROR at setup of test_create_post ______________________
+
+request = <SubRequest '_django_db_marker' for <Function test_register>>
+
+    @pytest.fixture(autouse=True)
+    def _django_db_marker(request: pytest.FixtureRequest) -> None:
+        """Implement the django_db marker, internal to pytest-django."""
+        marker = request.node.get_closest_marker("django_db")
+        if marker:
+>           request.getfixturevalue("_django_db_helper")
+
+env\Lib\site-packages\pytest_django\plugin.py:532: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+env\Lib\site-packages\pytest_django\fixtures.py:139: in django_db_setup
+    db_cfg = setup_databases(
+env\Lib\site-packages\django\test\utils.py:176: in setup_databases
+    test_databases, mirrored_aliases = get_unique_databases_and_mirrors(aliases)
+env\Lib\site-packages\django\test\utils.py:318: in get_unique_databases_and_mirrors
+    default_sig = connections[DEFAULT_DB_ALIAS].creation.test_db_signature()
+env\Lib\site-packages\django\db\backends\base\creation.py:341: in test_db_signature
+    self._get_test_db_name(),
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <django.db.backends.postgresql.creation.DatabaseCreation object at 0x000002D07D990510>
+
+    def _get_test_db_name(self):
+        """
+        Internal implementation - return the name of the test DB that will be
+        created. Only useful when called from create_test_db() and
+        _create_test_db() and when no external munging is done with the 'NAME'
+        settings.
+        """
+        if self.connection.settings_dict['TEST']['NAME']:
+            return self.connection.settings_dict['TEST']['NAME']
+>       return TEST_DATABASE_PREFIX + self.connection.settings_dict['NAME']
+E       TypeError: can only concatenate str (not "NoneType") to str
+
+env\Lib\site-packages\django\db\backends\base\creation.py:176: TypeError
+_________________ ERROR at setup of TestPostViewSet.test_list _________________
+
+request = <SubRequest '_django_db_marker' for <Function test_register>>
+
+    @pytest.fixture(autouse=True)
+    def _django_db_marker(request: pytest.FixtureRequest) -> None:
+        """Implement the django_db marker, internal to pytest-django."""
+        marker = request.node.get_closest_marker("django_db")
+        if marker:
+>           request.getfixturevalue("_django_db_helper")
+
+env\Lib\site-packages\pytest_django\plugin.py:532: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+env\Lib\site-packages\pytest_django\fixtures.py:139: in django_db_setup
+    db_cfg = setup_databases(
+env\Lib\site-packages\django\test\utils.py:176: in setup_databases
+    test_databases, mirrored_aliases = get_unique_databases_and_mirrors(aliases)
+env\Lib\site-packages\django\test\utils.py:318: in get_unique_databases_and_mirrors
+    default_sig = connections[DEFAULT_DB_ALIAS].creation.test_db_signature()
+env\Lib\site-packages\django\db\backends\base\creation.py:341: in test_db_signature
+    self._get_test_db_name(),
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <django.db.backends.postgresql.creation.DatabaseCreation object at 0x000002D07D990510>
+
+    def _get_test_db_name(self):
+        """
+        Internal implementation - return the name of the test DB that will be
+        created. Only useful when called from create_test_db() and
+        _create_test_db() and when no external munging is done with the 'NAME'
+        settings.
+        """
+        if self.connection.settings_dict['TEST']['NAME']:
+            return self.connection.settings_dict['TEST']['NAME']
+>       return TEST_DATABASE_PREFIX + self.connection.settings_dict['NAME']
+E       TypeError: can only concatenate str (not "NoneType") to str
+
+env\Lib\site-packages\django\db\backends\base\creation.py:176: TypeError
+_______________ ERROR at setup of TestPostViewSet.test_retrieve _______________
+
+request = <SubRequest '_django_db_marker' for <Function test_register>>
+
+    @pytest.fixture(autouse=True)
+    def _django_db_marker(request: pytest.FixtureRequest) -> None:
+        """Implement the django_db marker, internal to pytest-django."""
+        marker = request.node.get_closest_marker("django_db")
+        if marker:
+>           request.getfixturevalue("_django_db_helper")
+
+env\Lib\site-packages\pytest_django\plugin.py:532: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+env\Lib\site-packages\pytest_django\fixtures.py:139: in django_db_setup
+    db_cfg = setup_databases(
+env\Lib\site-packages\django\test\utils.py:176: in setup_databases
+    test_databases, mirrored_aliases = get_unique_databases_and_mirrors(aliases)
+env\Lib\site-packages\django\test\utils.py:318: in get_unique_databases_and_mirrors
+    default_sig = connections[DEFAULT_DB_ALIAS].creation.test_db_signature()
+env\Lib\site-packages\django\db\backends\base\creation.py:341: in test_db_signature
+    self._get_test_db_name(),
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <django.db.backends.postgresql.creation.DatabaseCreation object at 0x000002D07D990510>
+
+    def _get_test_db_name(self):
+        """
+        Internal implementation - return the name of the test DB that will be
+        created. Only useful when called from create_test_db() and
+        _create_test_db() and when no external munging is done with the 'NAME'
+        settings.
+        """
+        if self.connection.settings_dict['TEST']['NAME']:
+            return self.connection.settings_dict['TEST']['NAME']
+>       return TEST_DATABASE_PREFIX + self.connection.settings_dict['NAME']
+E       TypeError: can only concatenate str (not "NoneType") to str
+
+env\Lib\site-packages\django\db\backends\base\creation.py:176: TypeError
+________________ ERROR at setup of TestPostViewSet.test_create ________________
+
+request = <SubRequest '_django_db_marker' for <Function test_register>>
+
+    @pytest.fixture(autouse=True)
+    def _django_db_marker(request: pytest.FixtureRequest) -> None:
+        """Implement the django_db marker, internal to pytest-django."""
+        marker = request.node.get_closest_marker("django_db")
+        if marker:
+>           request.getfixturevalue("_django_db_helper")
+
+env\Lib\site-packages\pytest_django\plugin.py:532: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+env\Lib\site-packages\pytest_django\fixtures.py:139: in django_db_setup
+    db_cfg = setup_databases(
+env\Lib\site-packages\django\test\utils.py:176: in setup_databases
+    test_databases, mirrored_aliases = get_unique_databases_and_mirrors(aliases)
+env\Lib\site-packages\django\test\utils.py:318: in get_unique_databases_and_mirrors
+    default_sig = connections[DEFAULT_DB_ALIAS].creation.test_db_signature()
+env\Lib\site-packages\django\db\backends\base\creation.py:341: in test_db_signature
+    self._get_test_db_name(),
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <django.db.backends.postgresql.creation.DatabaseCreation object at 0x000002D07D990510>
+
+    def _get_test_db_name(self):
+        """
+        Internal implementation - return the name of the test DB that will be
+        created. Only useful when called from create_test_db() and
+        _create_test_db() and when no external munging is done with the 'NAME'
+        settings.
+        """
+        if self.connection.settings_dict['TEST']['NAME']:
+            return self.connection.settings_dict['TEST']['NAME']
+>       return TEST_DATABASE_PREFIX + self.connection.settings_dict['NAME']
+E       TypeError: can only concatenate str (not "NoneType") to str
+
+env\Lib\site-packages\django\db\backends\base\creation.py:176: TypeError
+________________ ERROR at setup of TestPostViewSet.test_update ________________
+
+request = <SubRequest '_django_db_marker' for <Function test_register>>
+
+    @pytest.fixture(autouse=True)
+    def _django_db_marker(request: pytest.FixtureRequest) -> None:
+        """Implement the django_db marker, internal to pytest-django."""
+        marker = request.node.get_closest_marker("django_db")
+        if marker:
+>           request.getfixturevalue("_django_db_helper")
+
+env\Lib\site-packages\pytest_django\plugin.py:532: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+env\Lib\site-packages\pytest_django\fixtures.py:139: in django_db_setup
+    db_cfg = setup_databases(
+env\Lib\site-packages\django\test\utils.py:176: in setup_databases
+    test_databases, mirrored_aliases = get_unique_databases_and_mirrors(aliases)
+env\Lib\site-packages\django\test\utils.py:318: in get_unique_databases_and_mirrors
+    default_sig = connections[DEFAULT_DB_ALIAS].creation.test_db_signature()
+env\Lib\site-packages\django\db\backends\base\creation.py:341: in test_db_signature
+    self._get_test_db_name(),
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <django.db.backends.postgresql.creation.DatabaseCreation object at 0x000002D07D990510>
+
+    def _get_test_db_name(self):
+        """
+        Internal implementation - return the name of the test DB that will be
+        created. Only useful when called from create_test_db() and
+        _create_test_db() and when no external munging is done with the 'NAME'
+        settings.
+        """
+        if self.connection.settings_dict['TEST']['NAME']:
+            return self.connection.settings_dict['TEST']['NAME']
+>       return TEST_DATABASE_PREFIX + self.connection.settings_dict['NAME']
+E       TypeError: can only concatenate str (not "NoneType") to str
+
+env\Lib\site-packages\django\db\backends\base\creation.py:176: TypeError
+________________ ERROR at setup of TestPostViewSet.test_delete ________________
+
+request = <SubRequest '_django_db_marker' for <Function test_register>>
+
+    @pytest.fixture(autouse=True)
+    def _django_db_marker(request: pytest.FixtureRequest) -> None:
+        """Implement the django_db marker, internal to pytest-django."""
+        marker = request.node.get_closest_marker("django_db")
+        if marker:
+>           request.getfixturevalue("_django_db_helper")
+
+env\Lib\site-packages\pytest_django\plugin.py:532: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+env\Lib\site-packages\pytest_django\fixtures.py:139: in django_db_setup
+    db_cfg = setup_databases(
+env\Lib\site-packages\django\test\utils.py:176: in setup_databases
+    test_databases, mirrored_aliases = get_unique_databases_and_mirrors(aliases)
+env\Lib\site-packages\django\test\utils.py:318: in get_unique_databases_and_mirrors
+    default_sig = connections[DEFAULT_DB_ALIAS].creation.test_db_signature()
+env\Lib\site-packages\django\db\backends\base\creation.py:341: in test_db_signature
+    self._get_test_db_name(),
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <django.db.backends.postgresql.creation.DatabaseCreation object at 0x000002D07D990510>
+
+    def _get_test_db_name(self):
+        """
+        Internal implementation - return the name of the test DB that will be
+        created. Only useful when called from create_test_db() and
+        _create_test_db() and when no external munging is done with the 'NAME'
+        settings.
+        """
+        if self.connection.settings_dict['TEST']['NAME']:
+            return self.connection.settings_dict['TEST']['NAME']
+>       return TEST_DATABASE_PREFIX + self.connection.settings_dict['NAME']
+E       TypeError: can only concatenate str (not "NoneType") to str
+
+env\Lib\site-packages\django\db\backends\base\creation.py:176: TypeError
+____________ ERROR at setup of TestPostViewSet.test_list_anonymous ____________
+
+request = <SubRequest '_django_db_marker' for <Function test_register>>
+
+    @pytest.fixture(autouse=True)
+    def _django_db_marker(request: pytest.FixtureRequest) -> None:
+        """Implement the django_db marker, internal to pytest-django."""
+        marker = request.node.get_closest_marker("django_db")
+        if marker:
+>           request.getfixturevalue("_django_db_helper")
+
+env\Lib\site-packages\pytest_django\plugin.py:532: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+env\Lib\site-packages\pytest_django\fixtures.py:139: in django_db_setup
+    db_cfg = setup_databases(
+env\Lib\site-packages\django\test\utils.py:176: in setup_databases
+    test_databases, mirrored_aliases = get_unique_databases_and_mirrors(aliases)
+env\Lib\site-packages\django\test\utils.py:318: in get_unique_databases_and_mirrors
+    default_sig = connections[DEFAULT_DB_ALIAS].creation.test_db_signature()
+env\Lib\site-packages\django\db\backends\base\creation.py:341: in test_db_signature
+    self._get_test_db_name(),
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <django.db.backends.postgresql.creation.DatabaseCreation object at 0x000002D07D990510>
+
+    def _get_test_db_name(self):
+        """
+        Internal implementation - return the name of the test DB that will be
+        created. Only useful when called from create_test_db() and
+        _create_test_db() and when no external munging is done with the 'NAME'
+        settings.
+        """
+        if self.connection.settings_dict['TEST']['NAME']:
+            return self.connection.settings_dict['TEST']['NAME']
+>       return TEST_DATABASE_PREFIX + self.connection.settings_dict['NAME']
+E       TypeError: can only concatenate str (not "NoneType") to str
+
+env\Lib\site-packages\django\db\backends\base\creation.py:176: TypeError
+__________ ERROR at setup of TestPostViewSet.test_retrieve_anonymous __________
+
+request = <SubRequest '_django_db_marker' for <Function test_register>>
+
+    @pytest.fixture(autouse=True)
+    def _django_db_marker(request: pytest.FixtureRequest) -> None:
+        """Implement the django_db marker, internal to pytest-django."""
+        marker = request.node.get_closest_marker("django_db")
+        if marker:
+>           request.getfixturevalue("_django_db_helper")
+
+env\Lib\site-packages\pytest_django\plugin.py:532: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+env\Lib\site-packages\pytest_django\fixtures.py:139: in django_db_setup
+    db_cfg = setup_databases(
+env\Lib\site-packages\django\test\utils.py:176: in setup_databases
+    test_databases, mirrored_aliases = get_unique_databases_and_mirrors(aliases)
+env\Lib\site-packages\django\test\utils.py:318: in get_unique_databases_and_mirrors
+    default_sig = connections[DEFAULT_DB_ALIAS].creation.test_db_signature()
+env\Lib\site-packages\django\db\backends\base\creation.py:341: in test_db_signature
+    self._get_test_db_name(),
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <django.db.backends.postgresql.creation.DatabaseCreation object at 0x000002D07D990510>
+
+    def _get_test_db_name(self):
+        """
+        Internal implementation - return the name of the test DB that will be
+        created. Only useful when called from create_test_db() and
+        _create_test_db() and when no external munging is done with the 'NAME'
+        settings.
+        """
+        if self.connection.settings_dict['TEST']['NAME']:
+            return self.connection.settings_dict['TEST']['NAME']
+>       return TEST_DATABASE_PREFIX + self.connection.settings_dict['NAME']
+E       TypeError: can only concatenate str (not "NoneType") to str
+
+env\Lib\site-packages\django\db\backends\base\creation.py:176: TypeError
+___________ ERROR at setup of TestPostViewSet.test_update_anonymous ___________
+
+request = <SubRequest '_django_db_marker' for <Function test_register>>
+
+    @pytest.fixture(autouse=True)
+    def _django_db_marker(request: pytest.FixtureRequest) -> None:
+        """Implement the django_db marker, internal to pytest-django."""
+        marker = request.node.get_closest_marker("django_db")
+        if marker:
+>           request.getfixturevalue("_django_db_helper")
+
+env\Lib\site-packages\pytest_django\plugin.py:532: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+env\Lib\site-packages\pytest_django\fixtures.py:139: in django_db_setup
+    db_cfg = setup_databases(
+env\Lib\site-packages\django\test\utils.py:176: in setup_databases
+    test_databases, mirrored_aliases = get_unique_databases_and_mirrors(aliases)
+env\Lib\site-packages\django\test\utils.py:318: in get_unique_databases_and_mirrors
+    default_sig = connections[DEFAULT_DB_ALIAS].creation.test_db_signature()
+env\Lib\site-packages\django\db\backends\base\creation.py:341: in test_db_signature
+    self._get_test_db_name(),
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <django.db.backends.postgresql.creation.DatabaseCreation object at 0x000002D07D990510>
+
+    def _get_test_db_name(self):
+        """
+        Internal implementation - return the name of the test DB that will be
+        created. Only useful when called from create_test_db() and
+        _create_test_db() and when no external munging is done with the 'NAME'
+        settings.
+        """
+        if self.connection.settings_dict['TEST']['NAME']:
+            return self.connection.settings_dict['TEST']['NAME']
+>       return TEST_DATABASE_PREFIX + self.connection.settings_dict['NAME']
+E       TypeError: can only concatenate str (not "NoneType") to str
+
+env\Lib\site-packages\django\db\backends\base\creation.py:176: TypeError
+___________ ERROR at setup of TestPostViewSet.test_delete_anonymous ___________
+
+request = <SubRequest '_django_db_marker' for <Function test_register>>
+
+    @pytest.fixture(autouse=True)
+    def _django_db_marker(request: pytest.FixtureRequest) -> None:
+        """Implement the django_db marker, internal to pytest-django."""
+        marker = request.node.get_closest_marker("django_db")
+        if marker:
+>           request.getfixturevalue("_django_db_helper")
+
+env\Lib\site-packages\pytest_django\plugin.py:532: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+env\Lib\site-packages\pytest_django\fixtures.py:139: in django_db_setup
+    db_cfg = setup_databases(
+env\Lib\site-packages\django\test\utils.py:176: in setup_databases
+    test_databases, mirrored_aliases = get_unique_databases_and_mirrors(aliases)
+env\Lib\site-packages\django\test\utils.py:318: in get_unique_databases_and_mirrors
+    default_sig = connections[DEFAULT_DB_ALIAS].creation.test_db_signature()
+env\Lib\site-packages\django\db\backends\base\creation.py:341: in test_db_signature
+    self._get_test_db_name(),
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <django.db.backends.postgresql.creation.DatabaseCreation object at 0x000002D07D990510>
+
+    def _get_test_db_name(self):
+        """
+        Internal implementation - return the name of the test DB that will be
+        created. Only useful when called from create_test_db() and
+        _create_test_db() and when no external munging is done with the 'NAME'
+        settings.
+        """
+        if self.connection.settings_dict['TEST']['NAME']:
+            return self.connection.settings_dict['TEST']['NAME']
+>       return TEST_DATABASE_PREFIX + self.connection.settings_dict['NAME']
+E       TypeError: can only concatenate str (not "NoneType") to str
+
+env\Lib\site-packages\django\db\backends\base\creation.py:176: TypeError
+_________________ ERROR at setup of TestUserViewSet.test_list _________________
+
+request = <SubRequest '_django_db_marker' for <Function test_register>>
+
+    @pytest.fixture(autouse=True)
+    def _django_db_marker(request: pytest.FixtureRequest) -> None:
+        """Implement the django_db marker, internal to pytest-django."""
+        marker = request.node.get_closest_marker("django_db")
+        if marker:
+>           request.getfixturevalue("_django_db_helper")
+
+env\Lib\site-packages\pytest_django\plugin.py:532: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+env\Lib\site-packages\pytest_django\fixtures.py:139: in django_db_setup
+    db_cfg = setup_databases(
+env\Lib\site-packages\django\test\utils.py:176: in setup_databases
+    test_databases, mirrored_aliases = get_unique_databases_and_mirrors(aliases)
+env\Lib\site-packages\django\test\utils.py:318: in get_unique_databases_and_mirrors
+    default_sig = connections[DEFAULT_DB_ALIAS].creation.test_db_signature()
+env\Lib\site-packages\django\db\backends\base\creation.py:341: in test_db_signature
+    self._get_test_db_name(),
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <django.db.backends.postgresql.creation.DatabaseCreation object at 0x000002D07D990510>
+
+    def _get_test_db_name(self):
+        """
+        Internal implementation - return the name of the test DB that will be
+        created. Only useful when called from create_test_db() and
+        _create_test_db() and when no external munging is done with the 'NAME'
+        settings.
+        """
+        if self.connection.settings_dict['TEST']['NAME']:
+            return self.connection.settings_dict['TEST']['NAME']
+>       return TEST_DATABASE_PREFIX + self.connection.settings_dict['NAME']
+E       TypeError: can only concatenate str (not "NoneType") to str
+
+env\Lib\site-packages\django\db\backends\base\creation.py:176: TypeError
+_______________ ERROR at setup of TestUserViewSet.test_retrieve _______________
+
+request = <SubRequest '_django_db_marker' for <Function test_register>>
+
+    @pytest.fixture(autouse=True)
+    def _django_db_marker(request: pytest.FixtureRequest) -> None:
+        """Implement the django_db marker, internal to pytest-django."""
+        marker = request.node.get_closest_marker("django_db")
+        if marker:
+>           request.getfixturevalue("_django_db_helper")
+
+env\Lib\site-packages\pytest_django\plugin.py:532: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+env\Lib\site-packages\pytest_django\fixtures.py:139: in django_db_setup
+    db_cfg = setup_databases(
+env\Lib\site-packages\django\test\utils.py:176: in setup_databases
+    test_databases, mirrored_aliases = get_unique_databases_and_mirrors(aliases)
+env\Lib\site-packages\django\test\utils.py:318: in get_unique_databases_and_mirrors
+    default_sig = connections[DEFAULT_DB_ALIAS].creation.test_db_signature()
+env\Lib\site-packages\django\db\backends\base\creation.py:341: in test_db_signature
+    self._get_test_db_name(),
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <django.db.backends.postgresql.creation.DatabaseCreation object at 0x000002D07D990510>
+
+    def _get_test_db_name(self):
+        """
+        Internal implementation - return the name of the test DB that will be
+        created. Only useful when called from create_test_db() and
+        _create_test_db() and when no external munging is done with the 'NAME'
+        settings.
+        """
+        if self.connection.settings_dict['TEST']['NAME']:
+            return self.connection.settings_dict['TEST']['NAME']
+>       return TEST_DATABASE_PREFIX + self.connection.settings_dict['NAME']
+E       TypeError: can only concatenate str (not "NoneType") to str
+
+env\Lib\site-packages\django\db\backends\base\creation.py:176: TypeError
+________________ ERROR at setup of TestUserViewSet.test_create ________________
+
+request = <SubRequest '_django_db_marker' for <Function test_register>>
+
+    @pytest.fixture(autouse=True)
+    def _django_db_marker(request: pytest.FixtureRequest) -> None:
+        """Implement the django_db marker, internal to pytest-django."""
+        marker = request.node.get_closest_marker("django_db")
+        if marker:
+>           request.getfixturevalue("_django_db_helper")
+
+env\Lib\site-packages\pytest_django\plugin.py:532: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+env\Lib\site-packages\pytest_django\fixtures.py:139: in django_db_setup
+    db_cfg = setup_databases(
+env\Lib\site-packages\django\test\utils.py:176: in setup_databases
+    test_databases, mirrored_aliases = get_unique_databases_and_mirrors(aliases)
+env\Lib\site-packages\django\test\utils.py:318: in get_unique_databases_and_mirrors
+    default_sig = connections[DEFAULT_DB_ALIAS].creation.test_db_signature()
+env\Lib\site-packages\django\db\backends\base\creation.py:341: in test_db_signature
+    self._get_test_db_name(),
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <django.db.backends.postgresql.creation.DatabaseCreation object at 0x000002D07D990510>
+
+    def _get_test_db_name(self):
+        """
+        Internal implementation - return the name of the test DB that will be
+        created. Only useful when called from create_test_db() and
+        _create_test_db() and when no external munging is done with the 'NAME'
+        settings.
+        """
+        if self.connection.settings_dict['TEST']['NAME']:
+            return self.connection.settings_dict['TEST']['NAME']
+>       return TEST_DATABASE_PREFIX + self.connection.settings_dict['NAME']
+E       TypeError: can only concatenate str (not "NoneType") to str
+
+env\Lib\site-packages\django\db\backends\base\creation.py:176: TypeError
+________________ ERROR at setup of TestUserViewSet.test_update ________________
+
+request = <SubRequest '_django_db_marker' for <Function test_register>>
+
+    @pytest.fixture(autouse=True)
+    def _django_db_marker(request: pytest.FixtureRequest) -> None:
+        """Implement the django_db marker, internal to pytest-django."""
+        marker = request.node.get_closest_marker("django_db")
+        if marker:
+>           request.getfixturevalue("_django_db_helper")
+
+env\Lib\site-packages\pytest_django\plugin.py:532: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+env\Lib\site-packages\pytest_django\fixtures.py:139: in django_db_setup
+    db_cfg = setup_databases(
+env\Lib\site-packages\django\test\utils.py:176: in setup_databases
+    test_databases, mirrored_aliases = get_unique_databases_and_mirrors(aliases)
+env\Lib\site-packages\django\test\utils.py:318: in get_unique_databases_and_mirrors
+    default_sig = connections[DEFAULT_DB_ALIAS].creation.test_db_signature()
+env\Lib\site-packages\django\db\backends\base\creation.py:341: in test_db_signature
+    self._get_test_db_name(),
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <django.db.backends.postgresql.creation.DatabaseCreation object at 0x000002D07D990510>
+
+    def _get_test_db_name(self):
+        """
+        Internal implementation - return the name of the test DB that will be
+        created. Only useful when called from create_test_db() and
+        _create_test_db() and when no external munging is done with the 'NAME'
+        settings.
+        """
+        if self.connection.settings_dict['TEST']['NAME']:
+            return self.connection.settings_dict['TEST']['NAME']
+>       return TEST_DATABASE_PREFIX + self.connection.settings_dict['NAME']
+E       TypeError: can only concatenate str (not "NoneType") to str
+
+env\Lib\site-packages\django\db\backends\base\creation.py:176: TypeError
+_____________________ ERROR at setup of test_create_user ______________________
+
+request = <SubRequest '_django_db_marker' for <Function test_create_user>>
+
+    @pytest.fixture(autouse=True)
+    def _django_db_marker(request: pytest.FixtureRequest) -> None:
+        """Implement the django_db marker, internal to pytest-django."""
+        marker = request.node.get_closest_marker("django_db")
+        if marker:
+>           request.getfixturevalue("_django_db_helper")
+
+env\Lib\site-packages\pytest_django\plugin.py:532: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+env\Lib\site-packages\pytest_django\plugin.py:532: in _django_db_marker
+    request.getfixturevalue("_django_db_helper")
+env\Lib\site-packages\pytest_django\fixtures.py:139: in django_db_setup
+    db_cfg = setup_databases(
+env\Lib\site-packages\django\test\utils.py:176: in setup_databases
+    test_databases, mirrored_aliases = get_unique_databases_and_mirrors(aliases)
+env\Lib\site-packages\django\test\utils.py:318: in get_unique_databases_and_mirrors
+    default_sig = connections[DEFAULT_DB_ALIAS].creation.test_db_signature()
+env\Lib\site-packages\django\db\backends\base\creation.py:341: in test_db_signature
+    self._get_test_db_name(),
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <django.db.backends.postgresql.creation.DatabaseCreation object at 0x000002D07D990510>
+
+    def _get_test_db_name(self):
+        """
+        Internal implementation - return the name of the test DB that will be
+        created. Only useful when called from create_test_db() and
+        _create_test_db() and when no external munging is done with the 'NAME'
+        settings.
+        """
+        if self.connection.settings_dict['TEST']['NAME']:
+            return self.connection.settings_dict['TEST']['NAME']
+>       return TEST_DATABASE_PREFIX + self.connection.settings_dict['NAME']
+E       TypeError: can only concatenate str (not "NoneType") to str
+
+env\Lib\site-packages\django\db\backends\base\creation.py:176: TypeError
+___________________ ERROR at setup of test_create_superuser ___________________
+
+request = <SubRequest '_django_db_marker' for <Function test_create_superuser>>
+
+    @pytest.fixture(autouse=True)
+    def _django_db_marker(request: pytest.FixtureRequest) -> None:
+        """Implement the django_db marker, internal to pytest-django."""
+        marker = request.node.get_closest_marker("django_db")
+        if marker:
+>           request.getfixturevalue("_django_db_helper")
+
+env\Lib\site-packages\pytest_django\plugin.py:532: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+env\Lib\site-packages\pytest_django\plugin.py:532: in _django_db_marker
+    request.getfixturevalue("_django_db_helper")
+env\Lib\site-packages\pytest_django\plugin.py:532: in _django_db_marker
+    request.getfixturevalue("_django_db_helper")
+env\Lib\site-packages\pytest_django\fixtures.py:139: in django_db_setup
+    db_cfg = setup_databases(
+env\Lib\site-packages\django\test\utils.py:176: in setup_databases
+    test_databases, mirrored_aliases = get_unique_databases_and_mirrors(aliases)
+env\Lib\site-packages\django\test\utils.py:318: in get_unique_databases_and_mirrors
+    default_sig = connections[DEFAULT_DB_ALIAS].creation.test_db_signature()
+env\Lib\site-packages\django\db\backends\base\creation.py:341: in test_db_signature
+    self._get_test_db_name(),
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <django.db.backends.postgresql.creation.DatabaseCreation object at 0x000002D07D990510>
+
+    def _get_test_db_name(self):
+        """
+        Internal implementation - return the name of the test DB that will be
+        created. Only useful when called from create_test_db() and
+        _create_test_db() and when no external munging is done with the 'NAME'
+        settings.
+        """
+        if self.connection.settings_dict['TEST']['NAME']:
+            return self.connection.settings_dict['TEST']['NAME']
+>       return TEST_DATABASE_PREFIX + self.connection.settings_dict['NAME']
+E       TypeError: can only concatenate str (not "NoneType") to str
+
+env\Lib\site-packages\django\db\backends\base\creation.py:176: TypeError
+================================== FAILURES ===================================
+___________________________ test_database_settings ____________________________
+
+    def test_database_settings():
+        from django.conf import settings
+>       assert settings.DATABASES['default']['NAME'] == os.getenv('DBPOSNAME')
+E       AssertionError: assert None == 'drf_react_libro'
+E        +  where 'drf_react_libro' = <function getenv at 0x000002D079CBDE40>('DBPOSNAME')
+E        +    where <function getenv at 0x000002D079CBDE40> = os.getenv
+
+tests.py:16: AssertionError
+=========================== short test summary info ===========================
+FAILED tests.py::test_database_settings - AssertionError: assert None == 'drf...
+ERROR core/auth/tests.py::TestAuthenticationViewSet::test_login - TypeError: ...
+ERROR core/auth/tests.py::TestAuthenticationViewSet::test_register - TypeErro...
+ERROR core/auth/tests.py::TestAuthenticationViewSet::test_refresh - TypeError...
+ERROR core/comment/tests/test_comment_models.py::test_create_comment - TypeEr...
+ERROR core/comment/tests/test_comment_viewsets.py::TestCommentViewSet::test_list
+ERROR core/comment/tests/test_comment_viewsets.py::TestCommentViewSet::test_retrieve
+ERROR core/comment/tests/test_comment_viewsets.py::TestCommentViewSet::test_create
+ERROR core/comment/tests/test_comment_viewsets.py::TestCommentViewSet::test_update
+ERROR core/comment/tests/test_comment_viewsets.py::TestCommentViewSet::test_delete
+ERROR core/comment/tests/test_comment_viewsets.py::TestCommentViewSet::test_list_anonymous
+ERROR core/comment/tests/test_comment_viewsets.py::TestCommentViewSet::test_retrieve_anonymous
+ERROR core/comment/tests/test_comment_viewsets.py::TestCommentViewSet::test_create_anonymous
+ERROR core/comment/tests/test_comment_viewsets.py::TestCommentViewSet::test_update_anonymous
+ERROR core/comment/tests/test_comment_viewsets.py::TestCommentViewSet::test_delete_anonymous
+ERROR core/post/tests/test_post_models.py::test_create_post - TypeError: can ...
+ERROR core/post/tests/test_post_viewsets.py::TestPostViewSet::test_list - Typ...
+ERROR core/post/tests/test_post_viewsets.py::TestPostViewSet::test_retrieve
+ERROR core/post/tests/test_post_viewsets.py::TestPostViewSet::test_create - T...
+ERROR core/post/tests/test_post_viewsets.py::TestPostViewSet::test_update - T...
+ERROR core/post/tests/test_post_viewsets.py::TestPostViewSet::test_delete - T...
+ERROR core/post/tests/test_post_viewsets.py::TestPostViewSet::test_list_anonymous
+ERROR core/post/tests/test_post_viewsets.py::TestPostViewSet::test_retrieve_anonymous
+ERROR core/post/tests/test_post_viewsets.py::TestPostViewSet::test_update_anonymous
+ERROR core/post/tests/test_post_viewsets.py::TestPostViewSet::test_delete_anonymous
+ERROR core/user/tests/test_user_viewsets.py::TestUserViewSet::test_list - Typ...
+ERROR core/user/tests/test_user_viewsets.py::TestUserViewSet::test_retrieve
+ERROR core/user/tests/test_user_viewsets.py::TestUserViewSet::test_create - T...
+ERROR core/user/tests/test_user_viewsets.py::TestUserViewSet::test_update - T...
+ERROR core/user/tests.py::test_create_user - TypeError: can only concatenate ...
+ERROR core/user/tests.py::test_create_superuser - TypeError: can only concate...
+=================== 1 failed, 3 passed, 30 errors in 4.89s ====================

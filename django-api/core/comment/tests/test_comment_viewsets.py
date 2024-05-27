@@ -1,7 +1,7 @@
 from rest_framework import status
-from core.fixtures.user import user
-from core.fixtures.post import post
-from core.fixtures.comment import comment
+from core.fixtures.user import user,user2
+from core.fixtures.post import post, post2
+from core.fixtures.comment import comment,comment2
 
 
 class TestCommentViewSet:
@@ -18,6 +18,7 @@ class TestCommentViewSet:
     client.force_authenticate(user=user)
     response = client.get(self.endpoint + post.public_id.hex +
                           "/comment/" + comment.public_id.hex + "/")
+    
     assert response.status_code == status.HTTP_200_OK
     assert response.data['id'] == comment.public_id.hex
     assert response.data['body'] == comment.body
@@ -83,3 +84,27 @@ class TestCommentViewSet:
   def test_delete_anonymous(self, client, post, comment):
     response = client.delete(self.endpoint + post.public_id.hex + "/comment/" + comment.public_id.hex + "/")
     assert response.status_code == status.HTTP_401_UNAUTHORIZED
+
+  # probando permisos de usuario segun si es el autor del comentario o el autor del post
+  def test_update_author(self,client,user,post,comment):
+    client.force_authenticate(user=user)
+    data = {
+      "body": "Test Comment Body Updated",
+      "author": user.public_id.hex,
+      "post": post.public_id.hex
+    }
+    response = client.put(self.endpoint + post.public_id.hex + "/comment/" + comment.public_id.hex + "/", data)
+    assert response.status_code == status.HTTP_200_OK
+    assert response.data['body'] == data['body']
+
+  def test_update_comment_other_author(self,client,user,user2,post,comment2): # verificar que el autor del post, no pueda actualizar un comentario de otro usuario
+    client.force_authenticate(user=user)
+    data = {
+      "body": "Test Comment Body Updated",
+      "author": user2.public_id.hex,
+      "post": post.public_id.hex
+    }
+    response = client.put(self.endpoint + post.public_id.hex + "/comment/" + comment2.public_id.hex + "/", data)
+    assert response.status_code == status.HTTP_403_FORBIDDEN
+  
+  

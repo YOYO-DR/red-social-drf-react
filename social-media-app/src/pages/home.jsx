@@ -10,12 +10,13 @@ import Post from "../components/posts/Post";
 
 function Home() {
   const user = getUser();
+
   if (!user) {
     return <Navigate to="/login" />;
   }
 
   const posts = useSWR("/post/", fetcher, {
-    refreshInterval: 10000, // mala practica, pero se hace para que se actualice la lista de posts cada 10 segundos, se podria actualizar con ciertos eventos
+    //refreshInterval: 10000, // mala practica, pero se hace para que se actualice la lista de posts cada 10 segundos, se podria actualizar con ciertos eventos
   });
 
   return (
@@ -33,7 +34,7 @@ function Home() {
               />
             </Col>
             <Col sm={10} className="flex-grow-1">
-              <CreatePost />
+              <CreatePost changePost={posts.mutate} />
             </Col>
           </Row>
           <Row className="my-4">

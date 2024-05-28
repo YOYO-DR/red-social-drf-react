@@ -12,6 +12,8 @@ import { randomAvatar } from "../../utils";
 import axiosService from "../../helpers/axios";
 import Toaster from "../Toaster";
 import { getUser } from "../../hooks/user.actions";
+import ModalPost from "../forms/ModalPost";
+import UpdatePost from "./UpdatePost";
 
 const MoreToggleIcon = React.forwardRef(({ onClick }, ref) => (
   <a
@@ -32,28 +34,22 @@ MoreToggleIcon.propTypes = {
 
 MoreToggleIcon.displayName = "MoreToggleIcon"; // nombre de visualización
 
-const UpdatePost = ({ post }) => {
-  const handleClick = (e) => {
-    e.preventDefault();
-    console.log("Update post", post.body);
-  }
-  return (<Dropdown.Item onClick={handleClick}>Update</Dropdown.Item>)
-}
 
-UpdatePost.propTypes = {
-  post: PropTypes.object.isRequired,
-}
 
 function Post(props) {
   const { post, refresh } = props;
-  const [showToast, setShowToast] = useState(false);
   const user = getUser();
+  const [showToast, setShowToast] = useState(false);
+  const [toastMessage, setToastMessage] = useState("");
+  const [toastType, setToastType] = useState("");
 
   const handleDelete = () => {
     axiosService
       .delete(`/post/${post.id}/`)
       .then(() => {
         setShowToast(true);
+        setToastMessage("Post deleted 🚀");
+        setToastType("danger");
         refresh();
       })
       .catch((err) => console.error(err.response.data));
@@ -88,12 +84,12 @@ function Post(props) {
                 </p>
               </div>
             </div>
-            {user.id !== post.author.id && ( // solo el autor del post puede eliminarlo
+            {user.id === post.author.id && ( // solo el autor del post puede eliminarlo
               <div>
                 <Dropdown>
                   <Dropdown.Toggle as={MoreToggleIcon}></Dropdown.Toggle>
                   <Dropdown.Menu>
-                    <UpdatePost post={post} />
+                    <UpdatePost post={post} changePost={refresh} setShowToast={setShowToast} setToastMessage={setToastMessage} setToastType={setToastType} />
                     <Dropdown.Item
                       onClick={handleDelete}
                       className="text-danger"
@@ -165,11 +161,12 @@ function Post(props) {
       </Card>
       <Toaster
         title="Post!"
-        message="Post deleted"
-        type="danger"
+        message={toastMessage}
+        type={toastType}
         showToast={showToast}
         onClose={() => setShowToast(false)}
       />
+      
     </>
   );
 }

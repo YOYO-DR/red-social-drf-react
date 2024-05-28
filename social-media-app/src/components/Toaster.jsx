@@ -1,8 +1,8 @@
 import { Toast, ToastContainer } from "react-bootstrap";
 import PropTypes from "prop-types"; // Importar PropTypes
 
-function Toaster(props) {
-  const { showToast, title, message, onClose, type } = props;
+function Toaster({ showToast, title, message, onClose, type }) {
+  console.log(showToast,message)
   return (
     <ToastContainer position="top-center">
       <Toast onClose={onClose} show={showToast} delay={3000} autohide bg={type}>
@@ -17,7 +17,8 @@ function Toaster(props) {
   );
 }
 
-Toaster.propTypes = { // defino los props que recibe el componente
+Toaster.propTypes = {
+  // defino los props que recibe el componente
   showToast: PropTypes.bool, // showToast es un booleano
   title: PropTypes.string, // title es un string
   message: PropTypes.string, // message es un string

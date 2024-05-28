@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 
 def main():
     """Run administrative tasks."""
-    load_dotenv("./.env") # Cargo las variables de entorno
+    load_dotenv() # Cargo las variables de entorno, debe estar en la raiz del proyecto de django
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings")
     try:
         from django.core.management import execute_from_command_line

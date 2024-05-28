@@ -1,6 +1,5 @@
 import os
 
-
 DataBasesConfig = {
   "default": {
     "ENGINE": "django.db.backends.postgresql",

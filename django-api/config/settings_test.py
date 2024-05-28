@@ -1,12 +1,4 @@
 from .settings import *
+from .db_config_test import BdTest
 
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": "django_react_libro",
-        "USER": "postgres",
-        "PASSWORD": "root",
-        "HOST": "localhost",
-        "PORT": "5432",
-    }
-}
+DATABASES = BdTest

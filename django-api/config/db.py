@@ -1,7 +1,8 @@
 import os
+from config.settings import BASE_DIR
 
 DataBasesConfig = {
-  "default": {
+  "a": {
     "ENGINE": "django.db.backends.postgresql",
     "NAME": os.getenv("DBPOSNAME"),
     "USER": os.getenv("DBPOSUSER"),
@@ -16,5 +17,9 @@ DataBasesConfig = {
       "PASSWORD": "root",
       "HOST": "localhost",
       "PORT": "5432",
-    }
+    },
+  "default": {
+    "ENGINE": "django.db.backends.sqlite3",
+    "NAME": os.path.join(BASE_DIR, "db.sqlite3"),
+  },
 }

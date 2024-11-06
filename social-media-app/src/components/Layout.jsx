@@ -1,19 +1,50 @@
-import PropTypes from "prop-types"; // Importar PropTypes
-
+import React, { createContext, useMemo, useState } from "react";
 import Navigationbar from "./Navbar";
 
-function Layout({ children }) { // creo el componente Layout que recibe la propiedad children, sera el nodo principal
+import { ArrowLeftOutlined } from "@ant-design/icons";
+import { useNavigate } from "react-router-dom";
+import Toaster from "./Toaster";
+
+export const Context = createContext("unknown");
+
+function Layout(props) {
+  const navigate = useNavigate();
+  const [toaster, setToaster] = useState({
+    title: "",
+    show: false,
+    message: "",
+    type: "",
+  });
+
+  const value = useMemo(() => ({ toaster, setToaster }), [toaster]);
+
+  const { hasNavigationBack } = props;
   return (
-    <>
-      <Navigationbar /> {/* Agrego el componente Navigationbar que será la barra de navegación */}
-      <div className="container m-5">{children}</div> {/* Agrego el contenedor principal  */}
-    </>
+    <Context.Provider value={value}>
+      <div>
+        <Navigationbar />
+        {hasNavigationBack && (
+          <ArrowLeftOutlined
+            style={{
+              color: "#0D6EFD",
+              fontSize: "24px",
+              marginLeft: "5%",
+              marginTop: "1%",
+            }}
+            onClick={() => navigate(-1)}
+          />
+        )}
+        <div className="container my-2">{props.children}</div>
+      </div>
+      <Toaster
+        title={toaster.title}
+        message={toaster.message}
+        type={toaster.type}
+        showToast={toaster.show}
+        onClose={() => setToaster({ ...toaster, show: false })}
+      />
+    </Context.Provider>
   );
 }
 
-Layout.propTypes = { // Especifico los props que recibe el componente
-  children: PropTypes.node.isRequired, // Agrego la propiedad children que sea un nodo requerido
-};
-
 export default Layout;
-

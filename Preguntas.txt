@@ -56,3 +56,10 @@ es una libreria para realizar diferentes tipos de pruebas
 
 3. ¿Qué es la pirámide de pruebas?
 Es una practica para realizar pruebas, se deben hacer primero las pruebas unitarias ya que son rapidas, cortas y se prueban varios componentes, luego de integracion cuando se prueban varios codigos en conjunto, y luego las pruebas de extremo a extremo donde se prueban diferentes metodos en conjunto de la aplicacion y hasta tambien conexiones con APIs externas como por ejemplo una API de pago
+
+2. ¿Qué es un accesorio?
+3. ¿Qué es un elemento hijo en React?
+5. ¿Cuál es el método de mapa utilizado en JSX?
+1. ¿Qué es un modal?
+4. ¿Qué es una estructura alámbrica?
+6. ¿Cuál es el uso del método de mutación en objetos SWR?

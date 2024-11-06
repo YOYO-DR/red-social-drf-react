@@ -80,12 +80,4 @@ const UpdatePost = ({
   );
 };
 
-UpdatePost.propTypes = {
-  post: PropTypes.object.isRequired,
-  changePost: PropTypes.func.isRequired,
-  setShowToast: PropTypes.func.isRequired,
-  setToastMessage: PropTypes.func.isRequired,
-  setToastType: PropTypes.func.isRequired,
-};
-
 export default UpdatePost;

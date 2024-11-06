@@ -72,17 +72,18 @@ class UserManager(
 
 class User(AbstractModel, AbstractBaseUser, PermissionsMixin):
     username = models.CharField(db_index=True, max_length=255, unique=True)
-    first_name = models.CharField(max_length=255)
-    last_name = models.CharField(max_length=255)
+    first_name = models.CharField(max_length=255,blank=True,null=True)
+    last_name = models.CharField(max_length=255,blank=True,null=True)
 
     email = models.EmailField(db_index=True, unique=True)
     is_active = models.BooleanField(default=True)
     is_superuser = models.BooleanField(default=False)
+    is_staff = models.BooleanField(default=False)
 
-    bio = models.TextField(null=True)  # biografia
-    avatar = models.ImageField(null=True)  # imagen de perfil
+    bio = models.TextField(null=True,blank=True)  # biografia
+    avatar = models.ImageField(null=True,blank=True)  # imagen de perfil
 
-    posts_liked = models.ManyToManyField("core_post.Post", related_name="liked_by")
+    posts_liked = models.ManyToManyField("core_post.Post", related_name="liked_by", blank=True)
 
     USERNAME_FIELD = "email"  # campo que se utilizara para el login, la cua es unico
     REQUIRED_FIELDS = ["username"]
